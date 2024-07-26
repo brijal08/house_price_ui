@@ -31,11 +31,10 @@ if st.button("Predict"):
 		'longitude': label_Longitude
 		}
         )
-
-        if response.status_code == 200:
-            label = json.loads(response._content)
-    	    st.write(f"House Price is {label['price']}")
+	if response.status_code == 200:
+		label = json.loads(response._content)
+		st.write(f"House Price is {label['price']}")
         else:
-            st.write("Error: Unable to get the response from the server.")
+		st.write("Error: Unable to get the response from the server.")
     else:
-        st.write("Please enter values.")
+	    st.write("Please enter values.")
