@@ -15,26 +15,20 @@ label_AveOccup = st.text_input("number of household members:")
 label_Latitude = st.text_input("Latitude:")
 label_Longitude = st.text_input("Longitude:")
 
-
 if st.button("Predict"):
     if label_medInc:
         # Send the label to the server
         response = requests.post(
             "https://brijal08-house-price.hf.space/predict_house_price",  # Replace with your API endpoint
-            json={'medInc': label_MedInc,
-		'houseAge': label_HouseAge,
-		'avgRooms': label_AveRooms,
-		'avgBdrms': label_AveBedrms,
-		'population': label_Population,
-		'avgOccup': label_AveOccup,
-		'latitude': label_Latitude,
-		'longitude': label_Longitude
-		}
+            json={'medInc': label_medInc,'houseAge': label_HouseAge,'avgRooms': label_AveRooms,'avgBdrms': label_AveBedrms,'population': label_Population,'avgOccup': label_AveOccup,'latitude': label_Latitude,'longitude': label_Longitude}
         )
-	if response.status_code == 200:
-		label = json.loads(response._content)
-		st.write(f"House Price is {label['price']}")
+
+        if response.status_code == 200:
+            # Convert the response content to an text
+            label = json.loads(response._content)
+            # Display the value
+            st.write(f"House Price is {label['price']}")
         else:
-		st.write("Error: Unable to get the response from the server.")
+            st.write("Error: Unable to get the response from the server.")
     else:
-	    st.write("Please enter values.")
+        st.write("Please enter a label.")
